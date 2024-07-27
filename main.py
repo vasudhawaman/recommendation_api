@@ -15,7 +15,7 @@ client = MongoClient('mongodb+srv://vasudhawaman734:NTmWW8UMpb5980be@cluster0.ct
 databasenames =client.list_database_names()
 
 db =client['music']
-collection =db['music']
+collection =db['musics']
 
 result =collection.find()
 
@@ -31,7 +31,7 @@ similarities = {}
 
 for i in range(len(cosine_similarities)):
     
-    similar_indices = cosine_similarities[i].argsort()[:-50:-1]
+    similar_indices = cosine_similarities[i].argsort()[:-5:-1]
     
     similarities[songs['song'].iloc[i]] = [(cosine_similarities[i][x], songs['song'][x], songs['artist'][x]) for x in similar_indices][1:]
 
@@ -65,7 +65,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=['https://musicify-frontend.vercel.app'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
